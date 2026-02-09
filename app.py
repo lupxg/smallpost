@@ -5,12 +5,11 @@ def create_app():
     app  = Flask(__name__)
 
     # Registering blueprints.
-    from  posts.post import post
+    from small_post.posts.post import post
 
     app.register_blueprint(post)
 
     return app
-
 
 if __name__ == "__main__":
     app = create_app()
