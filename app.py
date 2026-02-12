@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from mysql.connector import connect, Error
+# from mysql.connector import connect, Error
 
 def create_app():
     app  = Flask(__name__)
