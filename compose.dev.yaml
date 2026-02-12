@@ -17,14 +17,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    secrets:
-      - db-password
     environment:
       - FLASK_DEBUG=True
-      - PASSWORD_FILE_PATH=/run/secrets/db-password
-      - DB_HOST=db
-      - DB_NAME=example
-      - DB_USER=root
   
   db:
     image: mariadb
@@ -37,6 +31,7 @@ services:
     environment: 
       - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db-password
       - MARIADB_DATABASE=dflask
+      - MARIADB_USER=root
     expose: 
       - 3306
     healthcheck:
@@ -51,8 +46,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
 volumes:
   db-data:
+  
 secrets:
   db-password:
     file: db/password.txt
