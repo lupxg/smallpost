@@ -3,13 +3,14 @@ services:
     build: 
       context: .
       dockerfile: ./docker/Dockerfile
+      target: development
     ports:
       - "4000:5000"
     develop: 
       watch:
         - action: sync
           path: .
-          target: /code
+          target: /app
     volumes:
       - ./app.py:/app/app.py
     command: python app.py
