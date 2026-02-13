@@ -10,7 +10,7 @@ services:
       watch:
         - action: sync
           path: .
-          target: /code
+          target: /app
     volumes:
       - ./app.py:/app/app.py
     command: python app.py
