@@ -3,6 +3,7 @@ services:
     build: 
       context: .
       dockerfile: ./docker/Dockerfile
+      target: development
     ports:
       - "4000:5000"
     develop: 
