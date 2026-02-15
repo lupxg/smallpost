@@ -1,10 +1,11 @@
-from flask import Flask, jsonify
-# from mysql.connector import connect, Error
+from flask import Flask
+from small_post.extensions import db
 
 def create_app():
     app  = Flask(__name__)
+    app.config.from_object('config.DevelopmentConfig')
+    db.init_app(app)
 
-    # Registering blueprints.
     from small_post.posts.post import post
 
     app.register_blueprint(post)
