@@ -1,3 +1,11 @@
-# Smallpost.
+# Smallpost
+Minimal post application.
 
-Minimal post network. You can share your thoughts in a decate blog network.
+## Develop using docker
+Create a new folder called **db**, inside it create a file called password.txt and write your database password.
+
+Use this command to run the appliation in development mode.
+
+```bash
+docker compose -f compose.dev.yaml up --build
+```
