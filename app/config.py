@@ -20,12 +20,18 @@ def build_db_url():
 class Config:
     SECRET_KEY = 'JGAA9GA9AGHUAGJAKGJAGjgakl7ga7u'
 
+
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_recycle": 200,
         "pool_pre_ping": True,
     }
+    TESTING = True
     SQLALCHEMY_DATABASE_URI = build_db_url()
+
+
 class ProductionConfig(Config):
     DEBUG = False
+    TESTING = False
+    

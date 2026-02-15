@@ -1,17 +1,6 @@
-from flask import Flask
-from small_post.extensions import db
+from app import create_app
 
-def create_app():
-    app  = Flask(__name__)
-    app.config.from_object('config.DevelopmentConfig')
-    db.init_app(app)
-
-    from small_post.posts.post import post
-
-    app.register_blueprint(post)
-
-    return app
+app = create_app()
 
 if __name__ == "__main__":
-    app = create_app()
-    app.run(host="0.0.0.0")
+    app.run(debug=True)
