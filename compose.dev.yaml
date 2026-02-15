@@ -6,6 +6,8 @@ services:
       target: dev
     ports:
       - "4000:5000"
+    secrets:
+      - db-password
     volumes:
       - .:/app
     restart: unless-stopped
@@ -15,7 +17,7 @@ services:
     environment:
       - FLASK_DEBUG=True
       - DB_HOST=db
-      - DB_NAME=example
+      - DB_NAME=spost
       - DB_USER=root
   
   db:
