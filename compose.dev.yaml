@@ -3,17 +3,11 @@ services:
     build: 
       context: .
       dockerfile: ./docker/Dockerfile
-      target: development
+      target: dev
     ports:
       - "4000:5000"
-    develop: 
-      watch:
-        - action: sync
-          path: .
-          target: /app
     volumes:
-      - ./app.py:/app/app.py
-    command: python app.py
+      - .:/app
     restart: unless-stopped
     depends_on:
       db:
