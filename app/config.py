@@ -1,4 +1,5 @@
 import os
+from typing import List, Type
 
 def read_secret(path):
     try:
@@ -23,6 +24,7 @@ class Config:
 
 
 class DevelopmentConfig(Config):
+    CONFIG_NAME = "development"
     DEBUG = True
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_recycle": 200,
@@ -33,6 +35,14 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
+    CONFIG_NAME = "production"
     DEBUG = False
     TESTING = False
-    
+
+
+EXPORT_CONFIGS: List[type[Config]] = [
+    DevelopmentConfig,
+    ProductionConfig,
+]
+
+config_by_name= {cfg.CONFIG_NAME: cfg for cfg in EXPORT_CONFIGS}
