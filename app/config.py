@@ -13,8 +13,9 @@ def build_db_url():
     host = os.getenv("DB_HOST")
     user = os.getenv("DB_USER")
     name = os.getenv("DB_NAME")
+    port = os.getenv("DB_PORT")
 
-    return f"mysql+pymysql://{user}:{password}@{host}:3306/{name}"
+    return f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
 
 
 class Config:
