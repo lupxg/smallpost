@@ -19,6 +19,7 @@ services:
       - DB_HOST=db
       - DB_NAME=spost
       - DB_USER=root
+      - DB_PORT=3306
   
   db:
     image: mariadb

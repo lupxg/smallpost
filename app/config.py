@@ -1,4 +1,5 @@
 import os
+from typing import List, Type
 
 def read_secret(path):
     try:
@@ -13,8 +14,9 @@ def build_db_url():
     host = os.getenv("DB_HOST")
     user = os.getenv("DB_USER")
     name = os.getenv("DB_NAME")
+    port = os.getenv("DB_PORT")
 
-    return f"mysql+pymysql://{user}:{password}@{host}:3306/{name}"
+    return f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
 
 
 class Config:
@@ -22,6 +24,7 @@ class Config:
 
 
 class DevelopmentConfig(Config):
+    CONFIG_NAME = "development"
     DEBUG = True
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_recycle": 200,
@@ -32,6 +35,14 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
+    CONFIG_NAME = "production"
     DEBUG = False
     TESTING = False
-    
+
+
+EXPORT_CONFIGS: List[type[Config]] = [
+    DevelopmentConfig,
+    ProductionConfig,
+]
+
+config_by_name= {cfg.CONFIG_NAME: cfg for cfg in EXPORT_CONFIGS}
