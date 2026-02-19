@@ -15,7 +15,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      - FLASK_DEBUG=True
+      - FLASK_CONFIG=dev
       - DB_HOST=db
       - DB_NAME=spost
       - DB_USER=root

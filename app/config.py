@@ -20,24 +20,26 @@ def build_db_url():
 
 
 class Config:
+    CONFIG_NAME = "base"
     SECRET_KEY = 'JGAA9GA9AGHUAGJAKGJAGjgakl7ga7u'
 
 
 class DevelopmentConfig(Config):
-    CONFIG_NAME = "development"
+    CONFIG_NAME = "dev"
     DEBUG = True
+    TESTING = True
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_recycle": 200,
         "pool_pre_ping": True,
     }
-    TESTING = True
     SQLALCHEMY_DATABASE_URI = build_db_url()
 
 
 class ProductionConfig(Config):
-    CONFIG_NAME = "production"
+    CONFIG_NAME = "prod"
     DEBUG = False
     TESTING = False
+    SQLALCHEMY_DATABASE_URI = build_db_url()
 
 
 EXPORT_CONFIGS: List[type[Config]] = [
