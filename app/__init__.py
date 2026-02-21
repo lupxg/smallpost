@@ -3,6 +3,7 @@ from flask import Flask
 from app.extensions import db
 from app.config import config_by_name
 from flask_restx import Api
+from .routes import register_routes
 
 def create_app():
     app  = Flask(__name__)
@@ -12,11 +13,9 @@ def create_app():
         title='smallpost',
         version='1.0',
         description='lightweith posts system',
-        # All API metadatas
     )
-    
-    from app.posts.post import post
 
-    app.register_blueprint(post)
+    register_routes(api, app, 'spost')
+    api.init_app(app)
 
     return app
