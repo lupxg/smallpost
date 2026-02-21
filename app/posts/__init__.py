@@ -1,10 +1,6 @@
-import os 
+BASE_ROUTE = 'posts'
 
-from flask import Flask
+def register_route(api, app, root='api'):
+    from .controller import api as postapi
 
-def create_app(tesg_conig=None):
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'smallpost.sqlite'),
-    )
+    api.add_namespace(postapi, path=f'/{root}/{BASE_ROUTE}') 
