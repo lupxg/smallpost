@@ -1,0 +1,55 @@
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: ./docker/Dockerfile
+      target: dev
+    ports:
+      - "4000:5000"
+    secrets:
+      - db-password
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - FLASK_CONFIG=dev
+      - DB_HOST=db
+      - DB_NAME=spost
+      - DB_USER=root
+      - DB_PORT=3306
+  
+  db:
+    image: mariadb
+    restart: always
+    user: root
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/mysql
+    environment: 
+      - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db-password
+      - MARIADB_DATABASE=spost
+    expose: 
+      - 3306
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "/usr/local/bin/healthcheck.sh",
+          "--su-mysql",
+          "--connect",
+          "--innodb_initialized",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:
+  
+secrets:
+  db-password:
+    file: db/password.txt
