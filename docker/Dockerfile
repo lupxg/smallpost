@@ -44,5 +44,5 @@ RUN --mount=type=cache,target=/app/.cache/uv \
     uv sync --frozen 
 
 
-EXPOSE 5000 
-CMD ["uv","run","python","app.py"]
+EXPOSE 8000 
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "app.app:app"]
