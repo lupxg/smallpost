@@ -11,10 +11,10 @@ def read_secret(path):
 
 def build_db_url():
     password = read_secret("/run/secrets/db-password")
-    host = os.getenv("DB_HOST")
-    user = os.getenv("DB_USER")
-    name = os.getenv("DB_NAME")
-    port = os.getenv("DB_PORT")
+    host = os.getenv("MARIADB_HOST")
+    user = os.getenv("MARIADB_USER")
+    name = os.getenv("MARIADB_NAME")
+    port = os.getenv("MARIADB_PORT")
 
     return f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
 
