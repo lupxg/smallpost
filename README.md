@@ -1,24 +1,30 @@
 # Smallpost
-Minimal post application build with Docker. 
+A minimal post application built with Docker and Flask. 
 
 ## Description
-Smallpost is a lightweight post management application that allows creating and retrieving post via a simple API.
+Smallpost is a lightweight API that allows users to create and retrieve posts. It is designed to demonstrate a simple backend architecture using Flask and MySQL, fully containerized with Docker.
 
-## Tech stack
-- Backend: Flask v3.1.2 + Python v3.12.
-- Database: MySQL.
-- Containerization: Docker + Docker compose.
+## Motivation
+This is a personal project created to explore Docker and Flask in a practical way.
+There are likely areas for improvement — feedback and suggestions are welcome!
 
-## Requirements.
-- Docker.
-- Docker compose.
+## Tech Stack
+- **Backend:** Flask v3.1.2 + Python v3.12
+- **Database:** MySQL
+- **Containerization:** Docker + Docker Compose
 
-## Development setup using docker
-1. Create a folder named `db/`
-2. Inside it, create a file called `password.txt`
-3. Add your database password inside that file.
+## Requirements
+- Docker
+- Docker Compose
+
+## Getting Started
+1.  Copy the `.env.example` file and rename it to `.env`.
+2. Create a folder named `db/`
+3. Inside it, create a file called `password.txt`
+4. Add your database password to that file.
+
 Then run:
 ```bash
-docker compose -f compose.dev.yaml up --build
+docker compose up --build
 ```
-The application will start in development mode.
+Docker Compose will use the default configuration values defined in the .env file to start the application.
