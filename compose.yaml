@@ -5,7 +5,7 @@ services:
       dockerfile: ./docker/Dockerfile
       target: app-final
     ports:
-      - "8000:8000"
+      - "8000:${PORT:-8000}"
     secrets:
       - db-password
     volumes:
@@ -14,24 +14,19 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      - FLASK_CONFIG=dev
-      - DB_HOST=db
-      - DB_NAME=spost
-      - DB_USER=root
-      - DB_PORT=3306
+    env_file:
+      - ".env"
   
   db:
     image: mariadb
     restart: always
-    user: root
     secrets:
       - db-password
     volumes:
       - db-data:/var/lib/mysql
     environment: 
-      - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db-password
-      - MARIADB_DATABASE=spost
+      MARIADB_ROOT_PASSWORD_FILE: "${MARIADB_ROOT_PASSWORD_FILE}" 
+      MARIADB_DATABASE: "${MARIADB_NAME}"
     expose: 
       - 3306
     healthcheck:
