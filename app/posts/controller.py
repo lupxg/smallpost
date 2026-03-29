@@ -1,6 +1,6 @@
 from flask_restx import Namespace, Resource, marshal, fields
 from flask import request
-from ..app import db
+from ..extensions import Session
 from sqlalchemy import select
 from .model import Post
 from http import HTTPStatus
@@ -23,7 +23,8 @@ class PostsList(Resource):
         """
 
         stmt = select(Post)
-        posts = db.session.execute(stmt).scalars().all()
+        with Session() as session:
+            posts = session.execute(stmt).scalars().all()
         return posts, HTTPStatus.OK
     
 
@@ -32,9 +33,9 @@ class PostsList(Resource):
     def post(self):
         """ Creates a new person
         """
-
-        db.session.add(request.json)
-        db.session.commit()
+        with Session() as session:
+            session.add(request.json)
+            session.commit()
         return request.json, HTTPStatus.CREATED
 
 
