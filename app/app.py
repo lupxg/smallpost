@@ -9,6 +9,8 @@ def create_app():
     app  = Flask(__name__)
     app.config.from_object(config_by_name[os.getenv("FLASK_CONFIG", "test")])
     db.init_app(app)
+    db.create_all(app.app_context())
+
     api = Api(
         title='smallpost',
         version='1.0',
