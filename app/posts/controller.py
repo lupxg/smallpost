@@ -4,6 +4,8 @@ from ..extensions import Session
 from sqlalchemy import select
 from .model import Post
 from http import HTTPStatus
+from pydantic import ValidationError
+from app.posts.postDTO import PostDTO
 
 api = Namespace('posts', description='Post related operations')
 
@@ -33,8 +35,13 @@ class PostsList(Resource):
     def post(self):
         """ Creates a new person
         """
+
         with Session() as session:
-            session.add(request.json)
+            user_post = request.get_json()
+            postDTO = PostDTO(**user_post)
+            post = Post(**vars(postDTO))
+        
+            session.add(post)
             session.commit()
         return request.json, HTTPStatus.CREATED
 

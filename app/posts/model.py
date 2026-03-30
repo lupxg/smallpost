@@ -2,7 +2,6 @@ from ..extensions import Base
 from sqlalchemy import String, DateTime, Text
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
-from flask_sqlalchemy import SQLAlchemy
 
 class Post(Base):
     """ Post Entity 
