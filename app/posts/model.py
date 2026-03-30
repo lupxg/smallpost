@@ -1,10 +1,11 @@
-from ..extensions import Base 
+from ..extensions import Base
 from sqlalchemy import String, DateTime, Text
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 
+
 class Post(Base):
-    """ Post Entity 
+    """ Post Entity
     """
 
     __tablename__ = "post"
@@ -15,6 +16,6 @@ class Post(Base):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     # slug: Mapped[str] = mapped_column(String(200), unique=True, index=True)
     created_at: Mapped[DateTime] = mapped_column(
-        DateTime(timezone=True), 
+        DateTime(timezone=True),
         default=datetime.utcnow)
     status: Mapped[str] = mapped_column(String(20), default="draft")
