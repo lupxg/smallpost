@@ -1,4 +1,4 @@
-FROM python:3.14.2-slim-trixie AS app-build
+FROM python:3.14.3-slim-trixie AS app-build
 
 WORKDIR /app 
 
@@ -6,9 +6,10 @@ ARG APP_UID=1000
 ARG APP_GID=1000 
 
 RUN apt-get update \ 
-    && apt-get install -y --no-install-recommends curl \ 
+    && apt-get install -y --no-install-recommends \ 
     && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man \ 
-    && apt-get clean \ && groupadd -g "${APP_GID}" appuser \ 
+    && apt-get clean \ 
+    && groupadd -g "${APP_GID}" appuser \ 
     && useradd --create-home --no-log-init -u "${APP_UID}" -g "${APP_GID}" appuser \ 
     && chown appuser:appuser -R /app 
     
@@ -45,7 +46,8 @@ WORKDIR /app
 ARG APP_UID=1000 
 ARG APP_GID=1000 
 
-RUN apt-get update \ 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
     && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man \ 
     && apt-get clean \ && groupadd -g "${APP_GID}" appuser \ 
     && useradd --create-home --no-log-init -u "${APP_UID}" -g "${APP_GID}" appuser \ 
