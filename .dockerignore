@@ -5,5 +5,8 @@ __pycache__/
 .gitignore
 .idea/
 .vscode/
-Dockerfile
+docker/
+db/
 docker-compose.yml
+README.md 
+LICENSE
