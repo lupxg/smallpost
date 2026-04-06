@@ -64,4 +64,4 @@ COPY --chown=appuser:appuser --from=app-build /home/appuser/.local /home/appuser
 COPY --chown=appuser:appuser . . 
 
 EXPOSE 8000 
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "app.app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "app.app:create_app()"]

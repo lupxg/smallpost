@@ -18,19 +18,12 @@ def create_app(config_override=None):
     if config_override:
         app.config.update(config_override)
 
-    api = Api(
-        title='smallpost',
-        version='1.0',
-        description='lightweith posts system',
-    )
-
-    extensions(api, app)
-    register_routes(api, app, 'spost')
+    extensions(app)
 
     return app
 
 
-def extensions(api: Api, app: Flask):
+def extensions(app):
     """
     Register 0 or more extensions.
 
@@ -38,14 +31,21 @@ def extensions(api: Api, app: Flask):
     :param app: Flask application instance
     :return: None
     """
+    api = Api(
+        title='smallpost',
+        version='1.0',
+        description='Lightweight posts system',
+    )
 
     api.init_app(app)
+    register_routes(api, app, 'spost')
+
     with app.app_context():
         create_tables()
 
     return None
 
 
-
-
-app = create_app()
+if __name__ == '__main__':
+    app = create_app()
+    app.run()
