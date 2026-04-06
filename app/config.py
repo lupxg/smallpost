@@ -9,42 +9,17 @@ def read_secret(path):
         return None
 
 
-def build_db_url():
-    password = read_secret("/run/secrets/db-password")
-    host = os.getenv("MARIADB_HOST")
-    user = os.getenv("MARIADB_USER")
-    name = os.getenv("MARIADB_NAME")
-    port = os.getenv("MARIADB_PORT")
-
-    return f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
+password = read_secret(os.getenv("MARIADB_ROOT_PASSWORD_FILE"))
+host = os.getenv("MARIADB_HOST", "db")
+user = os.getenv("MARIADB_USER", "root")
+name = os.getenv("MARIADB_NAME", "spost")
+port = os.getenv("MARIADB_PORT", "3306")
+db_url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
 
 
-class Config:
-    CONFIG_NAME = "base"
-    SECRET_KEY = 'JGAA9GA9AGHUAGJAKGJAGjgakl7ga7u'
-
-
-class DevelopmentConfig(Config):
-    CONFIG_NAME = "dev"
-    DEBUG = True
-    TESTING = True
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        "pool_recycle": 200,
-        "pool_pre_ping": True,
-    }
-    SQLALCHEMY_DATABASE_URI = build_db_url()
-
-
-class ProductionConfig(Config):
-    CONFIG_NAME = "prod"
-    DEBUG = False
-    TESTING = False
-    SQLALCHEMY_DATABASE_URI = build_db_url()
-
-
-EXPORT_CONFIGS: List[type[Config]] = [
-    DevelopmentConfig,
-    ProductionConfig,
-]
-
-config_by_name= {cfg.CONFIG_NAME: cfg for cfg in EXPORT_CONFIGS}
+SECRET_KEY = 'JGAA9GA9AGHUAGJAKGJAGjgakl7ga7u'
+SQLALCHEMY_ENGINE_OPTIONS = {
+    "pool_recycle": 200,
+    "pool_pre_ping": True,
+}
+SQLALCHEMY_DATABASE_URI = os.getenv("MARIADB_DATABASE_URL", db_url)
