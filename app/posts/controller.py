@@ -1,10 +1,10 @@
 from flask_restx import Namespace, Resource, fields
 from flask import request
-from ..extensions import Session
 from sqlalchemy import select
 from .model import Post
 from http import HTTPStatus
 from app.posts.postDTO import PostDTO
+from ..extensions import db
 
 api = Namespace('posts', description='Post related operations')
 
@@ -24,8 +24,8 @@ class PostsList(Resource):
         """
 
         stmt = select(Post)
-        with Session() as session:
-            posts = session.execute(stmt).scalars().all()
+        posts = db.session.execute(stmt).scalars().all()
+
         return posts, HTTPStatus.OK
 
 
@@ -36,11 +36,10 @@ class PostsList(Resource):
         """ Creates a new person
         """
 
-        with Session() as session:
-            user_post = request.get_json()
-            postDTO = PostDTO(**user_post)
-            post = Post(**vars(postDTO))
+        user_post = request.get_json()
+        postDTO = PostDTO(**user_post)
+        post = Post(**vars(postDTO))
+        db.session.add(post)
+        db.session.commit()
 
-            session.add(post)
-            session.commit()
         return request.json, HTTPStatus.CREATED
