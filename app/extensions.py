@@ -1,15 +1,7 @@
-from app.config import SQLALCHEMY_DATABASE_URI
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-
-engine = create_engine(SQLALCHEMY_DATABASE_URI)
 Base = declarative_base()
-Session = sessionmaker(bind=engine)
-
-
-def create_tables():
-    from app.posts.model import Post
-    
-    Base.metadata.create_all(engine)
+db = SQLAlchemy(model_class=Base)
+migrate = Migrate()

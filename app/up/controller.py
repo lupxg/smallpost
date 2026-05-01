@@ -1,6 +1,6 @@
 from flask_restx import Namespace, Resource
 from sqlalchemy import text
-from app.extensions import Session
+from app.extensions import db
 
 api = Namespace('up', description='Post related operations')
 
@@ -15,7 +15,6 @@ class Health(Resource):
 class HealthDatabase(Resource):
     @api.doc('check database healthy')
     def get(self):
-        with Session() as session: 
-            session.execute(text("SELECT 1"))
+        db.session.execute(text("SELECT 1"))
         return "ok"
     
