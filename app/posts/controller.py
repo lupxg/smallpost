@@ -31,6 +31,7 @@ class PostsList(Resource):
 
     @api.response(HTTPStatus.CREATED, 'Created post')
     @api.expect(post_model)
+    @api.doc(security='Bearer')
     def post(self):
         """ Creates a new person
         """

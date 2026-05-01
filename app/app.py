@@ -1,9 +1,9 @@
-import os
 from flask import Flask
 from app.extensions import create_tables
 from flask_restx import Api
 from .routes import register_routes
 
+authorizations = {'Bearer': {'type':'apiKey', 'in':'header','name':'Authorization'}}
 
 def create_app(config_override=None):
     """
@@ -35,6 +35,8 @@ def extensions(app):
         title='smallpost',
         version='1.0',
         description='Lightweight posts system',
+        authorizations=authorizations,
+        security='Bearer'
     )
 
     api.init_app(app)
