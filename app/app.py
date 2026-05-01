@@ -1,5 +1,5 @@
 from flask import Flask
-from app.extensions import create_tables
+from app.extensions import db, migrate
 from flask_restx import Api
 from .routes import register_routes
 
@@ -40,10 +40,12 @@ def extensions(app):
     )
 
     api.init_app(app)
+    db.init_app(app)
+    migrate.init_app(app, db)
     register_routes(api, app, 'spost')
 
     with app.app_context():
-        create_tables()
+        db.create_all()
 
     return None
 
