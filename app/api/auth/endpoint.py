@@ -47,7 +47,7 @@ class UserLogin(Resource):
         user:User = User.query.filter_by(username=data.get('username')).first()
 
         if not user or not user.check_password(data.get('password')):
-            return {'error':'Invalid credentials'}, HTTPStatus.BAD_REQUEST
+            return {'error':'Invalid credentials'}, HTTPStatus.UNAUTHORIZED
         
         access_token = generate_token(user.id, 'access')
         refresh_token = generate_token(user.id, 'refresh')

@@ -5,6 +5,7 @@ from .model import Post
 from http import HTTPStatus
 from app.posts.postDTO import PostDTO
 from ..extensions import db
+from app.utils import token_required
 
 api = Namespace('posts', description='Post related operations')
 
@@ -31,9 +32,10 @@ class PostsList(Resource):
 
     @api.response(HTTPStatus.CREATED, 'Created post')
     @api.expect(post_model)
+    @token_required
     @api.doc(security='Bearer')
-    def post(self):
-        """ Creates a new person
+    def post(self, current_user):
+        """ Creates a post
         """
 
         user_post = request.get_json()

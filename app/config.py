@@ -17,7 +17,7 @@ port = os.getenv("MARIADB_PORT", "3306")
 db_url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
 
 
-SECRET_KEY = 'JGAA9GA9AGHUAGJAKGJAGjgakl7ga7u'
+SECRET_KEY = "JGAA9GA9AGHUAGJAKGJAGjgakl7ga7uklfjalkgklasjflasjflasjflkasjflkasjfklasjklgaioutuiujgklj"
 SQLALCHEMY_ENGINE_OPTIONS = {
     "pool_recycle": 200,
     "pool_pre_ping": True,
