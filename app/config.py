@@ -23,3 +23,8 @@ SQLALCHEMY_ENGINE_OPTIONS = {
     "pool_pre_ping": True,
 }
 SQLALCHEMY_DATABASE_URI = os.getenv("MARIADB_DATABASE_URL", db_url)
+
+
+# JWT config.
+jwt_token_expires = os.getenv("JWT_ACCESS_TOKEN_EXPIRES", "900")
+jwt_refresh_token_expires = os.getenv("JWT_REFRESH_TOKEN_EXPIRES", "604800")
